@@ -57,7 +57,7 @@ def favorito(opciones, rootOpciones):
 
 def menu(opciones, opc, rootOpciones):
     if(opc >= 1 and opc <= 5):
-        print(f'Usted ha elegido la opción número {opc}')
+        print(f'Usted ha elegido la opción {opc}')
         return[False, []]
     elif(opc == 6):
         selecFavorito = favorito(opciones, rootOpciones)
