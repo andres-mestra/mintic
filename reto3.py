@@ -9,6 +9,12 @@ def clear():
         os.system("clear")
 
 
+def promedio(array):
+    longitud = len(array)
+    suma = sum(array)
+    return suma/longitud
+
+
 def printMenu(opciones):
     for i in range(len(opciones)):
         print(f'{i+1}. {opciones[i][0]}\n')
@@ -55,60 +61,109 @@ def favorito(opciones):
         return [False, []]
 
 
-def change_password(opciones):
+def change_password():
     global defaultInv
     password = input('Ingrese contraseña actual: ')
 
     if(password != defaultInv):
         print('Error')
-        return [False, []]
+        return False
 
     password = input('Ingrese contraseña nueva: ')
     if(password == defaultInv):
         print('Error')
-        return [False, []]
+        return False
 
     defaultInv = password
-    return[True, opciones]
+    return True
 
 
-def input_coordenadas(opciones):
+def input_coordenadas():
+    global coordenadas
+
+    def valid_latitud(latitud):
+        if(latitud < 9.757 or latitud > 10.465):
+            print('Error coordenada')
+            return False
+        return True
+
+    def valid_longitud(longitud):
+        if(longitud < -73.623 or longitud > -72.987):
+            print('Error coordenada')
+            return False
+        return True
+
+    def print_coordenadas(coordenadas):
+        for i in range(len(coordenadas)):
+            print(f'coordenada [latitud,longitud] {i+1} : {coordenadas[i]}')
+
     # rangos validos
     # latitud: xE{x >= 9.757,x  <= 10.462}
     # longitud: xE{x >= -73.623,x  <= -72.987}
-    def add_coordenadas():
-        global coordenadas
 
-        for lat in range(3):
-            print(f'Coordenada {lat+1}:')
+    def add_coordenadas(index=None):
+        if(index == None):
+            for lat in range(3):
+                print(f'Coordenada {lat+1}:')
+                latitud = float(input('Latitud: '))
+                if(valid_latitud(latitud) == False):
+                    return False
+
+                longitud = float(input('Longitud: '))
+                if(valid_longitud(longitud) == False):
+                    return False
+
+                coordenadas[lat] = [latitud, longitud]
+        else:
             latitud = float(input('Latitud: '))
-            if(latitud < 9.757 or latitud > 10.465):
-                print('Error')
+            if(valid_latitud(latitud) == False):
                 return False
 
             longitud = float(input('Longitud: '))
-            if(longitud < -73.623 or longitud > -72.987):
-                print('Error')
+            if(valid_longitud(longitud) == False):
                 return False
-            coordenadas[lat] = [latitud, longitud]
+
+            coordenadas[index] = [latitud, longitud]
 
         return True
 
-    valid = add_coordenadas()
-    if(valid):
-        print(coordenadas)
-        return [True, opciones]
+    if(coordenadas[0][0] == 0):
+        valid = add_coordenadas()
+        if(valid):
+            return True
+    else:
+        print_coordenadas(coordenadas)
+        longitudes = [coordenadas[i][-1] for i in [0, 1, 2]]
+        latitudes = [coordenadas[i][0] for i in [0, 1, 2]]
+        index_occidental = longitudes.index(max(longitudes))
+        print(
+            f'la coordenada {index_occidental+1} es la que esta más al occidente')
+        print(
+            f'la coordenada promedio de todos los puntos: [{round(promedio(latitudes),3)}, {round(promedio(longitudes),3)}]')
+        index = int(input(
+            'Presione 1,2 o 3 para actualizar la respectiva coordenadas\nPresione 0 para regresar al menu\n'))
+        if(index >= 1 and index <= 3):
+            add_coor = add_coordenadas(index-1)
+            if(add_coor):
+                return True
+        elif(index == 0):
+            return True
+        else:
+            print('Error actualización')
 
-    # TODO: falta RF03
-    return [False, []]
+    return False
 
 
 def menu(opciones, opc):
-    if(opc >= 1 and opc <= 5):
-        response = opciones[opc-1][1](opciones)
-        return response
-        """ print(f'Usted ha elegido la opción {opc}')
-        return[False, []] """
+    if(opc >= 1 and opc <= 2):
+        response = opciones[opc-1][1]()
+        if(response):
+            return [True, opciones]
+        else:
+            return [False, []]
+    elif(opc >= 3 and opc <= 5):
+        print(f'Usted ha elegido la opción {opc}')
+        return[False, []]
     elif(opc == 6):
         selecFavorito = opciones[5][1](opciones)
         return selecFavorito
@@ -174,14 +229,9 @@ rootOpciones = [['Cambiar contraseña', change_password], ['Ingresar coordenadas
 
 def main():
     sesion()
-    print("Clear main")
-    # clear()
+    #print("Clear main")
+    clear()
 
 
 if __name__ == "__main__":
     main()
-
-# default = "51659"
-# defaultInv = "95615"
-
-# print('Clear outsaid')
