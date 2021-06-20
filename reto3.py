@@ -166,7 +166,7 @@ def zonas_wifi():
         # Radio de la Tierra en Km
         R = 6372.95477598
         delta_lat, delta_long = p2[0] - p1[0], p2[1] - p1[1]
-
+        # TODO: distancia en metros o kilometros  ?
         dist = 2 * R * math.asin(math.sqrt(
             (math.pow(math.sin(delta_lat/2), 2) +
              math.cos(p1[0])*math.cos(p2[0])*math.pow(math.sin(delta_long/2), 2))
@@ -199,6 +199,7 @@ def zonas_wifi():
         # vmedios en m/s
         vel_promedio_medios = {
             'pie': 0.483,
+            # TODO: El tiempo da negativo, esto no tiene sentido
             'bici': 3.33 - 19.44,
             'moto': 19.44,
             'bus': 16.67 - 0.483,
