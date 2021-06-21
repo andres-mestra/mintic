@@ -301,8 +301,8 @@ def selecMenu():
         elif(len(reset[1]) == 0):
             reset[0] = False
 
-        print('Clear selecMenu')
-        # clear()
+        #print('Clear selecMenu')
+        clear()
         if(countErrors >= 3):
             reset[0] = False
 
@@ -331,8 +331,7 @@ def sesion():
 default = "51659"
 defaultInv = "95615"
 # test coord [[9.758, -73.622], [9.759, -73.621], [9.8, -73.62]]
-#coordenadas = [[0, 0], [0, 0], [0, 0]]
-coordenadas = [[9.758, -73.622], [9.759, -73.621], [9.8, -73.62]]
+coordenadas = [[0, 0], [0, 0], [0, 0]]
 zonas = [
     [10.348, -73.051, 0],
     [10.171, -73.136, 0],
@@ -351,8 +350,8 @@ rootOpciones = [
 
 def main():
     sesion()
-    print("Clear main")
-    # clear()
+    #print("Clear main")
+    clear()
 
 
 if __name__ == "__main__":
