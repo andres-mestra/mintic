@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec 'python3 reto4.py' ./reto4.py"
+    "start": "nodemon --exec 'python3 reto5.py' ./reto5.py"
   },
   "author": "",
   "license": "ISC",
